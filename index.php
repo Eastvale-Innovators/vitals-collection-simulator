@@ -4,6 +4,24 @@
 
     $TelemedDB = db_connect();
 
+    if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+
+        $oxSat = $_POST['02sat'];
+        $heartRate = $_POST['heartrate'];
+        $bloodPressure = $_POST['BP'];
+        $temp = $_POST['Temp'];
+        $ekg = $_POST['EKG'];
+
+        $sql1 = "INSERT INTO vitals1 (02sat, heartrate, BP, Temp, EKG) VALUES (";
+        $sql1 .= "'" . db_escape($TelemedDB, $oxSat) . "',";
+        $sql1 .= "'" . db_escape($TelemedDB, $heartRate) . "',";
+        $sql1 .= "'" . db_escape($TelemedDB, $bloodPressure) . "',";
+        $sql1 .= "'" . db_escape($TelemedDB, $temp) . "',";
+        $sql1 .= "'" . db_escape($TelemedDB, $ekg) . "')";
+
+        $result1 = mysqli_query($TelemedDB, $sql1);
+        confirm_result_set($result1);
+    }
 
 ?>
 
@@ -23,9 +41,9 @@
 
         <div class="container-fluid">
 
-            <div class="h1 mt-5 text-light text-center">Vitals Uploader 🏥</div>
+            <div class="h1 mt-5 text-light text-center">Vitals Uploader Simulator 🏥</div>
 
-            <form action="vital_uploader.php" method="POST" class="w-75 ps-5 pe-5 mt-3" style="margin: auto; background-color: white; border-radius: 8px;">
+            <form action="index.php" method="POST" class="w-75 ps-5 pe-5 mt-3" style="margin: auto; background-color: white; border-radius: 8px;">
 
                 <div class="pt-2 pb-2">
                     <label for="02sat" class="text-light pb-2 text-dark"><b>02 Saturation</b></label>
