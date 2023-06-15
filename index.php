@@ -4,6 +4,10 @@
 
     $TelemedDB = db_connect();
 
+    $sql = 'SELECT * FROM vitals1';
+    $result = mysqli_query($TelemedDB, $sql);
+    confirm_result_set($result);
+
     if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
         $oxSat = $_POST['02sat'];
@@ -21,6 +25,8 @@
 
         $result1 = mysqli_query($TelemedDB, $sql1);
         confirm_result_set($result1);
+        header("Location: index.php");
+
     }
 
 ?>
@@ -73,6 +79,49 @@
                 <button type="submit" class="btn btn-lg btn-primary mt-3 mb-3">Upload</button>
 
             </form>
+
+            <div class="h1 mt-5 text-light text-center">Vitals SQL Data Table</div>
+
+            <div class="table-responsive">
+
+                <table style="margin: auto;" class="table w-75 bg-light mb-5">
+
+                    <thead>
+
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">02sat</th>
+                            <th scope="col">heartrate</th>
+                            <th scope="col">BP</th>
+                            <th scope="col">Temp</th>
+                            <th scope="col">EKG</th>
+                            <th scope="col">Timestamp</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <?php while($vital = mysqli_fetch_assoc($result)) { ?>
+
+                            <tr>
+                                <th scope="row"><?php echo $vital['id']; ?></th>
+                                <td><?php echo $vital['02sat']; ?></td>
+                                <td><?php echo $vital['heartrate']; ?></td>
+                                <td><?php echo $vital['BP']; ?></td>
+                                <td><?php echo $vital['Temp']; ?></td>
+                                <td><?php echo $vital['EKG']; ?></td>
+                                <td><?php echo $vital['Timestamp']; ?></td>
+                            </tr>
+
+                        <?php } ?>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
 
         </div>
 
